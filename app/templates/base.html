@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}Preporuke proizvoda{% endblock %}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', path='/style.css') }}"
+    >
+</head>
+
+<body>
+    <header class="site-header">
+        <a class="logo" href="/shop">
+            Recommend<span>Me</span>
+        </a>
+
+        <nav>
+            <a href="/shop">Proizvodi</a>
+            <a href="/shop/recommendations/1">
+                Preporučeno za vas
+            </a>
+            <a href="/docs">Docs
+            </a>
+        </nav>
+    </header>
+
+    <main class="page-container">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

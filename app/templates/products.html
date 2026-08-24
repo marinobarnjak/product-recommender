@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Proizvodi | PreporučiMe{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+    <div>
+        <p class="eyebrow">Internetska trgovina</p>
+        <h1>Pronađite proizvod za sebe</h1>
+        <p>
+            Pregledajte katalog i istražite sadržajno
+            slične proizvode.
+        </p>
+    </div>
+
+    <div class="product-count">
+        {{ total_products }} proizvoda
+    </div>
+</section>
+
+<section class="product-grid">
+    {% for product in products %}
+    <article class="product-card">
+        <a
+            class="product-image-wrapper"
+            href="/shop/products/{{ product.article_id }}"
+        >
+            <img
+                class="product-image"
+                src="{{ product.image_url }}"
+                alt="{{ product.prod_name }}"
+                loading="lazy"
+                onerror="
+                    this.onerror=null;
+                    this.src='/static/placeholder.svg';
+                "
+            >
+        </a>
+
+        <div class="product-info">
+            <p class="product-category">
+                {{ product.product_type_name }}
+            </p>
+
+            <h2>{{ product.prod_name }}</h2>
+
+            <p class="product-description">
+                {{ product.detail_desc }}
+            </p>
+
+            <div class="product-meta">
+                <span>{{ product.colour_group_name }}</span>
+                <span>{{ product.product_group_name }}</span>
+            </div>
+
+            <a
+                class="primary-button"
+                href="/shop/products/{{ product.article_id }}"
+            >
+                Pogledaj proizvod
+            </a>
+        </div>
+    </article>
+    {% endfor %}
+</section>
+
+<nav class="pagination">
+    {% if offset > 0 %}
+    <a
+        class="secondary-button"
+        href="/shop?offset={{ previous_offset }}&limit={{ limit }}"
+    >
+        Prethodna
+    </a>
+    {% endif %}
+
+    <span>
+        Prikazano {{ offset + 1 }}–{{ offset + products|length }}
+    </span>
+
+    {% if next_offset < total_products %}
+    <a
+        class="secondary-button"
+        href="/shop?offset={{ next_offset }}&limit={{ limit }}"
+    >
+        Sljedeća
+    </a>
+    {% endif %}
+</nav>
+{% endblock %}

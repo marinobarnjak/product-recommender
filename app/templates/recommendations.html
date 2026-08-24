@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}
+Preporučeno za vas | PreporučiMe
+{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+    <div>
+        <p class="eyebrow">Personalizirani sadržaj</p>
+        <h1>Preporučeno za {{ user.username }}</h1>
+        <p>
+            Preporuke su izrađene na temelju
+            {{ number_of_interactions }}
+            korisničkih aktivnosti.
+        </p>
+    </div>
+</section>
+
+{% if recommendations %}
+<section class="product-grid">
+    {% for product in recommendations %}
+    <article class="product-card">
+        <a
+            class="product-image-wrapper"
+            href="/shop/products/{{ product.article_id }}"
+        >
+            <img
+                class="product-image"
+                src="{{ product.image_url }}"
+                alt="{{ product.prod_name }}"
+                loading="lazy"
+                onerror="
+                    this.onerror=null;
+                    this.src='/static/placeholder.svg';
+                "
+            >
+        </a>
+
+        <div class="product-info">
+            <p class="product-category">
+                {{ product.product_type_name }}
+            </p>
+
+            <h2>{{ product.prod_name }}</h2>
+
+            <p class="product-description">
+                {{ product.detail_desc }}
+            </p>
+
+            <p class="similarity">
+                Podudaranje s interesima:
+                {{ (product.similarity_score * 100)|round(1) }}%
+            </p>
+
+            <a
+                class="primary-button"
+                href="/shop/products/{{ product.article_id }}"
+            >
+                Pogledaj proizvod
+            </a>
+        </div>
+    </article>
+    {% endfor %}
+</section>
+{% else %}
+<section class="empty-state">
+    <h2>Još nemamo dovoljno podataka</h2>
+    <p>
+        Pregledajte ili označite nekoliko proizvoda kako
+        bismo mogli izraditi preporuke.
+    </p>
+
+    <a class="primary-button" href="/shop">
+        Pregledaj proizvode
+    </a>
+</section>
+{% endif %}
+{% endblock %}

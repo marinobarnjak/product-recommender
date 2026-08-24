@@ -1,0 +1,47 @@
+# Virtualno okruženje
+.venv/
+venv/
+env/
+
+# Python privremene datoteke
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Baza podataka nastala korištenjem aplikacije
+data/recommender.db
+*.db-journal
+
+# Razvojna okruženja
+.vscode/
+.idea/
+
+# Varijable okruženja i povjerljivi podaci
+.env
+.env.*
+!.env.example
+
+# Operacijski sustav
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Privremene i sigurnosne kopije
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+# Logovi
+*.log
+
+# Distribucijske datoteke
+build/
+dist/
+*.egg-info/

@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ product.prod_name }} | PreporučiMe
+{% endblock %}
+
+{% block content %}
+<a class="back-link" href="/shop">
+    ← Povratak na proizvode
+</a>
+
+<section class="product-detail">
+    <div class="detail-image-wrapper">
+        <img
+            src="{{ product.image_url }}"
+            alt="{{ product.prod_name }}"
+            class="detail-image"
+            onerror="
+                this.onerror=null;
+                this.src='/static/placeholder.svg';
+            "
+        >
+    </div>
+
+    <div class="detail-content">
+        <p class="eyebrow">
+            {{ product.product_type_name }}
+        </p>
+
+        <h1>{{ product.prod_name }}</h1>
+
+        <p class="detail-description">
+            {{ product.detail_desc }}
+        </p>
+
+        <dl class="attributes">
+            <div>
+                <dt>Boja</dt>
+                <dd>{{ product.colour_group_name }}</dd>
+            </div>
+
+            <div>
+                <dt>Grupa</dt>
+                <dd>{{ product.product_group_name }}</dd>
+            </div>
+
+            <div>
+                <dt>Odjel</dt>
+                <dd>{{ product.department_name }}</dd>
+            </div>
+
+            <div>
+                <dt>Sekcija</dt>
+                <dd>{{ product.section_name }}</dd>
+            </div>
+        </dl>
+
+        <div class="interaction-buttons">
+            <form
+                action="/shop/interactions"
+                method="post"
+            >
+                <input
+                    type="hidden"
+                    name="user_id"
+                    value="{{ user_id }}"
+                >
+                <input
+                    type="hidden"
+                    name="article_id"
+                    value="{{ product.article_id }}"
+                >
+                <input
+                    type="hidden"
+                    name="interaction_type"
+                    value="like"
+                >
+
+                <button class="secondary-button" type="submit">
+                    Sviđa mi se
+                </button>
+            </form>
+
+            <form
+                action="/shop/interactions"
+                method="post"
+            >
+                <input
+                    type="hidden"
+                    name="user_id"
+                    value="{{ user_id }}"
+                >
+                <input
+                    type="hidden"
+                    name="article_id"
+                    value="{{ product.article_id }}"
+                >
+                <input
+                    type="hidden"
+                    name="interaction_type"
+                    value="purchase"
+                >
+
+                <button class="primary-button" type="submit">
+                    Kupi proizvod
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section class="related-section">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">Content-based preporuka</p>
+            <h2>Slični proizvodi</h2>
+        </div>
+    </div>
+
+    <div class="product-grid related-grid">
+        {% for product in similar_products %}
+        <article class="product-card">
+            <a
+                class="product-image-wrapper"
+                href="/shop/products/{{ product.article_id }}"
+            >
+                <img
+                    class="product-image"
+                    src="{{ product.image_url }}"
+                    alt="{{ product.prod_name }}"
+                    loading="lazy"
+                    onerror="
+                    this.onerror=null;
+                    this.src='/static/placeholder.svg';
+                "
+                >
+            </a>
+
+            <div class="product-info">
+                <p class="product-category">
+                    {{ product.product_type_name }}
+                </p>
+
+                <h2>{{ product.prod_name }}</h2>
+
+                <p class="similarity">
+                    Sličnost:
+                    {{ (product.similarity_score * 100)|round(1) }}%
+                </p>
+
+                <a
+                    class="primary-button"
+                    href="/shop/products/{{ product.article_id }}"
+                >
+                    Pogledaj proizvod
+                </a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
