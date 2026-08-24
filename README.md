@@ -200,18 +200,6 @@ python -m venv .venv
 .venv\Scripts\Activate.ps1
 ```
 
-Ako PowerShell zabrani pokretanje skripte, privremeno omogućiti njezino pokretanje:
-
-```powershell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-```
-
-Zatim ponovno aktivirati virtualno okruženje:
-
-```powershell
-.venv\Scripts\Activate.ps1
-```
-
 ### 4. Instalacija potrebnih biblioteka
 
 ```powershell
@@ -273,8 +261,6 @@ Primjer tijela zahtjeva:
   "username": "test_user"
 }
 ```
-
-Web-sučelje u trenutačnoj demonstracijskoj verziji koristi korisnika s identifikatorom `1`.
 
 ## API endpointi
 
